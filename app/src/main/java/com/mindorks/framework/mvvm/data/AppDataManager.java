@@ -23,7 +23,7 @@ import com.mindorks.framework.mvvm.data.local.db.DbHelper;
 import com.mindorks.framework.mvvm.data.local.prefs.PreferencesHelper;
 import com.mindorks.framework.mvvm.data.model.api.BookResponse;
 import com.mindorks.framework.mvvm.data.model.db.Book;
-import com.mindorks.framework.mvvm.data.remote.AppService;
+import com.mindorks.framework.mvvm.data.remote.AppApiHelper;
 
 import java.util.List;
 
@@ -36,42 +36,42 @@ import io.reactivex.Single;
  */
 public class AppDataManager implements DataManager {
 
-    private final AppService mAppService;
+    private final AppApiHelper apiHelper;
 
-    private final Context mContext;
+    private final Context context;
 
-    private final DbHelper mDbHelper;
+    private final DbHelper dbHelper;
 
-    private final Gson mGson;
+    private final Gson gson;
 
-    private final PreferencesHelper mPreferencesHelper;
+    private final PreferencesHelper preferencesHelper;
 
-    public AppDataManager(Context context, DbHelper dbHelper, PreferencesHelper preferencesHelper, AppService appService, Gson gson) {
-        mContext = context;
-        mDbHelper = dbHelper;
-        mPreferencesHelper = preferencesHelper;
-        mAppService = appService;
-        mGson = gson;
+    public AppDataManager(Context context, DbHelper dbHelper, PreferencesHelper preferencesHelper, AppApiHelper apiHelper, Gson gson) {
+        this.context = context;
+        this.dbHelper = dbHelper;
+        this.preferencesHelper = preferencesHelper;
+        this.apiHelper = apiHelper;
+        this.gson = gson;
     }
 
     @Override
     public Single<BookResponse> getBookList() {
-        return mAppService.getBookList();
+        return apiHelper.getBookList();
     }
 
     public int getUserId() {
-        return mPreferencesHelper.getUserId();
+        return preferencesHelper.getUserId();
     }
 
     public String getUserName() {
-        return mPreferencesHelper.getUserName();
+        return preferencesHelper.getUserName();
     }
 
     public String getUserPic() {
-        return mPreferencesHelper.getUserPic();
+        return preferencesHelper.getUserPic();
     }
 
     public Observable<List<Book>> getAllBooks() {
-        return mDbHelper.getAllBooks();
+        return dbHelper.getAllBooks();
     }
 }

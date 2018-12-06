@@ -29,7 +29,7 @@ import com.mindorks.framework.mvvm.data.local.db.AppDatabase;
 import com.mindorks.framework.mvvm.data.local.db.AppDbHelper;
 import com.mindorks.framework.mvvm.data.local.db.DbHelper;
 import com.mindorks.framework.mvvm.data.local.prefs.AppPreferencesHelper;
-import com.mindorks.framework.mvvm.data.remote.AppService;
+import com.mindorks.framework.mvvm.data.remote.AppApiHelper;
 import com.mindorks.framework.mvvm.utils.AppConstants;
 import com.mindorks.framework.mvvm.utils.rx.AppSchedulerProvider;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
@@ -63,11 +63,11 @@ public abstract class BaseViewModel<N> extends ViewModel {
             DbHelper dbHelper = new AppDbHelper(db);
             AppPreferencesHelper preferenceHelper = new AppPreferencesHelper(context, AppConstants.PREF_NAME);
             Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-            AppService appService = new Retrofit.Builder()
+            AppApiHelper appService = new Retrofit.Builder()
                     .baseUrl("http://127.0.0.1:8000")
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                    .build().create(AppService.class);
+                    .build().create(AppApiHelper.class);
             DataManager dataManager = new AppDataManager(context, dbHelper, preferenceHelper, appService, gson);
             SchedulerProvider schedulerProvider = new AppSchedulerProvider();
             BaseViewModel.dataManager = dataManager;
