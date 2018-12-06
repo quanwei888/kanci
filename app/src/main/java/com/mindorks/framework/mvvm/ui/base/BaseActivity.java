@@ -119,7 +119,7 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
     }
 
     public void performDependencyInjection() {
-        AndroidInjection.inject(this);
+        //AndroidInjection.inject(this);
     }
 
     @TargetApi(Build.VERSION_CODES.M)

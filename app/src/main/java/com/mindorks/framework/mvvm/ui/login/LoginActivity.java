@@ -26,15 +26,12 @@ import com.mindorks.framework.mvvm.R;
 import com.mindorks.framework.mvvm.databinding.ActivityLoginBinding;
 import com.mindorks.framework.mvvm.ui.base.BaseActivity;
 
-import javax.inject.Inject;
-
 /**
  * Created by amitshekhar on 08/07/17.
  */
 
 public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewModel> implements LoginNavigator {
 
-    @Inject
     LoginViewModel mLoginViewModel;
     private ActivityLoginBinding mActivityLoginBinding;
 
@@ -62,7 +59,6 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         // handle error
     }
 
-    @Override
     public void login() {
         String email = mActivityLoginBinding.etEmail.getText().toString();
         String password = mActivityLoginBinding.etPassword.getText().toString();
@@ -76,6 +72,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mLoginViewModel = new LoginViewModel(this);
         super.onCreate(savedInstanceState);
         mActivityLoginBinding = getViewDataBinding();
         mLoginViewModel.setNavigator(this);

@@ -16,13 +16,13 @@
 
 package com.mindorks.framework.mvvm.ui.login;
 
+import android.content.Context;
 import android.text.TextUtils;
 
-import com.mindorks.framework.mvvm.data.DataManager;
 import com.mindorks.framework.mvvm.data.model.api.BookListRequest;
+import com.mindorks.framework.mvvm.ui.base.BaseActivity;
 import com.mindorks.framework.mvvm.ui.base.BaseViewModel;
 import com.mindorks.framework.mvvm.utils.CommonUtils;
-import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
 
 /**
  * Created by amitshekhar on 08/07/17.
@@ -30,21 +30,11 @@ import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
 
 public class LoginViewModel extends BaseViewModel<LoginNavigator> {
 
-    public LoginViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
-        super(dataManager, schedulerProvider);
+    public LoginViewModel(Context context) {
+        super(context);
     }
 
     public boolean isEmailAndPasswordValid(String email, String password) {
-        // validate email and password
-        if (TextUtils.isEmpty(email)) {
-            return false;
-        }
-        if (!CommonUtils.isEmailValid(email)) {
-            return false;
-        }
-        if (TextUtils.isEmpty(password)) {
-            return false;
-        }
         return true;
     }
 
