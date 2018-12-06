@@ -17,8 +17,16 @@
 package com.mindorks.framework.mvvm.ui.login;
 
 import android.content.Context;
+import android.widget.Toast;
 
+import com.mindorks.framework.mvvm.data.model.api.BookResponse;
 import com.mindorks.framework.mvvm.ui.base.BaseViewModel;
+
+import org.reactivestreams.Subscriber;
+
+import io.reactivex.SingleObserver;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 
 /**
  * Created by amitshekhar on 08/07/17.
@@ -39,9 +47,26 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
 
         getDataManager().getBookList()
                 .subscribeOn(getSchedulerProvider().io())
-                .subscribe((bookResponse -> {
-                    setIsLoading(false);
-                }));
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(new SingleObserver<BookResponse>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(BookResponse bookResponse) {
+                        System.out.println("OK");
+                        setIsLoading(false);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getNavigator().handleError(e);
+                        System.out.println("ERROR");
+                        setIsLoading(false);
+                    }
+                });
     }
 
     public void onFbLoginClick() {

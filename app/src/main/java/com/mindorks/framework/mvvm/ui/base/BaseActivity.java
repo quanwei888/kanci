@@ -45,9 +45,9 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
     // TODO
     // this can probably depend on isLoading variable of BaseViewModel,
     // since its going to be common for all the activities
-    private ProgressDialog mProgressDialog;
-    private T mViewDataBinding;
-    private V mViewModel;
+    private ProgressDialog progressDialog;
+    private T binding;
+    private V viewModel;
 
     /**
      * Override for set binding variable
@@ -83,7 +83,7 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
     }
 
     public T getViewDataBinding() {
-        return mViewDataBinding;
+        return binding;
     }
 
     @TargetApi(Build.VERSION_CODES.M)
@@ -103,8 +103,8 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
     }
 
     public void hideLoading() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.cancel();
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.cancel();
         }
     }
 
@@ -130,14 +130,14 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
 
     public void showLoading() {
         hideLoading();
-        mProgressDialog = CommonUtils.showLoadingDialog(this);
+        progressDialog = CommonUtils.showLoadingDialog(this);
     }
 
     private void performDataBinding() {
-        mViewDataBinding = DataBindingUtil.setContentView(this, getLayoutId());
-        this.mViewModel = mViewModel == null ? getViewModel() : mViewModel;
-        mViewDataBinding.setVariable(getBindingVariable(), mViewModel);
-        mViewDataBinding.executePendingBindings();
+        binding = DataBindingUtil.setContentView(this, getLayoutId());
+        this.viewModel = viewModel == null ? getViewModel() : viewModel;
+        binding.setVariable(getBindingVariable(), viewModel);
+        binding.executePendingBindings();
     }
 }
 

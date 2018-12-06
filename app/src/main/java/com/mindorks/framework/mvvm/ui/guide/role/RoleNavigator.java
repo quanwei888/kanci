@@ -14,30 +14,14 @@
  *  limitations under the License
  */
 
-package com.mindorks.framework.mvvm.ui.login;
-
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
-
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import javax.inject.Inject;
-
-import dagger.Component;
+package com.mindorks.framework.mvvm.ui.guide.role;
 
 /**
- * Created by amitshekhar on 11/07/17.
+ * Created by amitshekhar on 08/07/17.
  */
 
-@RunWith(AndroidJUnit4.class)
-public class LoginActivityTest {
+public interface RoleNavigator {
 
-    @Rule
-    public ActivityTestRule<LoginActivity> mActivityRule = new ActivityTestRule<>(LoginActivity.class);
+    void handleError(Throwable throwable);
 
-    @Test
-    public void checkViewsDisplay() {
-    }
 }

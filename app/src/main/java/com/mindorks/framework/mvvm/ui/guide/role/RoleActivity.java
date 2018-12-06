@@ -14,7 +14,7 @@
  *  limitations under the License
  */
 
-package com.mindorks.framework.mvvm.ui.login;
+package com.mindorks.framework.mvvm.ui.guide.role;
 
 import android.content.Context;
 import android.content.Intent;
@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.mindorks.framework.mvvm.BR;
 import com.mindorks.framework.mvvm.R;
+import com.mindorks.framework.mvvm.databinding.ActivityGuideRoleBinding;
 import com.mindorks.framework.mvvm.databinding.ActivityLoginBinding;
 import com.mindorks.framework.mvvm.ui.base.BaseActivity;
 
@@ -30,13 +31,13 @@ import com.mindorks.framework.mvvm.ui.base.BaseActivity;
  * Created by amitshekhar on 08/07/17.
  */
 
-public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewModel> implements LoginNavigator {
+public class RoleActivity extends BaseActivity<ActivityGuideRoleBinding, RoleViewModel> implements RoleNavigator {
 
-    LoginViewModel viewModel;
-    private ActivityLoginBinding binding;
+    RoleViewModel mViewModel;
+    private ActivityGuideRoleBinding mBinding;
 
     public static Intent newIntent(Context context) {
-        return new Intent(context, LoginActivity.class);
+        return new Intent(context, RoleActivity.class);
     }
 
     @Override
@@ -46,36 +47,24 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_login;
+        return R.layout.activity_guide_role;
     }
 
     @Override
-    public LoginViewModel getViewModel() {
-        return viewModel;
+    public RoleViewModel getViewModel() {
+        return mViewModel;
     }
 
     @Override
     public void handleError(Throwable throwable) {
-        showLoading();
-        Toast.makeText(this, throwable.getMessage(),Toast.LENGTH_SHORT).show();
-    }
-
-    public void login() {
-        String email = binding.etEmail.getText().toString();
-        String password = binding.etPassword.getText().toString();
-        if (viewModel.isEmailAndPasswordValid(email, password)) {
-            hideKeyboard();
-            viewModel.login(email, password);
-        } else {
-            Toast.makeText(this, getString(R.string.invalid_email_password), Toast.LENGTH_SHORT).show();
-        }
+        Toast.makeText(this, throwable.getMessage(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        viewModel = new LoginViewModel(this);
+        mViewModel = new RoleViewModel(this);
         super.onCreate(savedInstanceState);
-        binding = getViewDataBinding();
-        viewModel.setNavigator(this);
+        mBinding = getViewDataBinding();
+        mViewModel.setNavigator(this);
     }
 }

@@ -47,18 +47,18 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public abstract class BaseViewModel<N> extends ViewModel {
 
-    private static DataManager mDataManager;
+    private static DataManager dataManager;
 
-    private final ObservableBoolean mIsLoading = new ObservableBoolean(false);
+    private final ObservableBoolean isLoading = new ObservableBoolean(false);
 
-    private static SchedulerProvider mSchedulerProvider;
+    private static SchedulerProvider schedulerProvider;
 
-    private CompositeDisposable mCompositeDisposable;
+    private CompositeDisposable compositeDisposable;
 
-    private WeakReference<N> mNavigator;
+    private WeakReference<N> navigator;
 
     public BaseViewModel(Context context) {
-        if (mDataManager == null && mSchedulerProvider == null) {
+        if (dataManager == null && schedulerProvider == null) {
             AppDatabase db = Room.databaseBuilder(context, AppDatabase.class, AppConstants.DB_NAME).fallbackToDestructiveMigration().build();
             DbHelper dbHelper = new AppDbHelper(db);
             AppPreferencesHelper preferenceHelper = new AppPreferencesHelper(context, AppConstants.PREF_NAME);
@@ -70,43 +70,43 @@ public abstract class BaseViewModel<N> extends ViewModel {
                     .build().create(AppService.class);
             DataManager dataManager = new AppDataManager(context, dbHelper, preferenceHelper, appService, gson);
             SchedulerProvider schedulerProvider = new AppSchedulerProvider();
-            mDataManager = dataManager;
-            mSchedulerProvider = schedulerProvider;
+            BaseViewModel.dataManager = dataManager;
+            BaseViewModel.schedulerProvider = schedulerProvider;
         }
-        this.mCompositeDisposable = new CompositeDisposable();
+        this.compositeDisposable = new CompositeDisposable();
     }
 
     @Override
     protected void onCleared() {
-        mCompositeDisposable.dispose();
+        compositeDisposable.dispose();
         super.onCleared();
     }
 
     public CompositeDisposable getCompositeDisposable() {
-        return mCompositeDisposable;
+        return compositeDisposable;
     }
 
     public DataManager getDataManager() {
-        return mDataManager;
+        return dataManager;
     }
 
     public ObservableBoolean getIsLoading() {
-        return mIsLoading;
+        return isLoading;
     }
 
     public void setIsLoading(boolean isLoading) {
-        mIsLoading.set(isLoading);
+        this.isLoading.set(isLoading);
     }
 
     public N getNavigator() {
-        return mNavigator.get();
+        return navigator.get();
     }
 
     public void setNavigator(N navigator) {
-        this.mNavigator = new WeakReference<>(navigator);
+        this.navigator = new WeakReference<>(navigator);
     }
 
     public SchedulerProvider getSchedulerProvider() {
-        return mSchedulerProvider;
+        return schedulerProvider;
     }
 }
