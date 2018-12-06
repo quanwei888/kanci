@@ -24,13 +24,12 @@ import java.util.List;
  * Created by amitshekhar on 07/07/17.
  */
 
-public class BookListResponse {
+public class BookResponse {
+    @Expose public List<Book> data;
+    @Expose public String message;
+    @Expose public String status;
 
-    @Expose private List<Item> data;
-    @Expose private String message;
-    @Expose private String statusCode;
-
-    public static class Item {
+    public static class Book {
         @Expose public int bid;
         @Expose public String name;
         @Expose public String pic;

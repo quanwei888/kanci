@@ -21,21 +21,16 @@ import com.mindorks.framework.mvvm.data.model.db.Book;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 import io.reactivex.Observable;
 
 /**
  * Created by amitshekhar on 07/07/17.
  */
 
-@Singleton
 public class AppDbHelper implements DbHelper {
 
     private final AppDatabase mAppDatabase;
 
-    @Inject
     public AppDbHelper(AppDatabase appDatabase) {
         this.mAppDatabase = appDatabase;
     }

@@ -21,15 +21,12 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.mindorks.framework.mvvm.data.local.db.DbHelper;
 import com.mindorks.framework.mvvm.data.local.prefs.PreferencesHelper;
-import com.mindorks.framework.mvvm.data.model.api.BookListRequest;
-import com.mindorks.framework.mvvm.data.model.api.BookListResponse;
+import com.mindorks.framework.mvvm.data.model.api.BookResponse;
 import com.mindorks.framework.mvvm.data.model.db.Book;
-import com.mindorks.framework.mvvm.data.remote.ApiHelper;
+import com.mindorks.framework.mvvm.data.remote.AppService;
 
 import java.util.List;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import io.reactivex.Observable;
 import io.reactivex.Single;
@@ -37,10 +34,9 @@ import io.reactivex.Single;
 /**
  * Created by amitshekhar on 07/07/17.
  */
-@Singleton
 public class AppDataManager implements DataManager {
 
-    private final ApiHelper mApiHelper;
+    private final AppService mAppService;
 
     private final Context mContext;
 
@@ -50,36 +46,31 @@ public class AppDataManager implements DataManager {
 
     private final PreferencesHelper mPreferencesHelper;
 
-    @Inject
-    public AppDataManager(Context context, DbHelper dbHelper, PreferencesHelper preferencesHelper, ApiHelper apiHelper, Gson gson) {
+    public AppDataManager(Context context, DbHelper dbHelper, PreferencesHelper preferencesHelper, AppService appService, Gson gson) {
         mContext = context;
         mDbHelper = dbHelper;
         mPreferencesHelper = preferencesHelper;
-        mApiHelper = apiHelper;
+        mAppService = appService;
         mGson = gson;
     }
 
     @Override
-    public Single<BookListResponse> getBookListCall(BookListRequest request) {
-        return mApiHelper.getBookListCall(request);
+    public Single<BookResponse> getBookList() {
+        return mAppService.getBookList();
     }
 
-    @Override
     public int getUserId() {
         return mPreferencesHelper.getUserId();
     }
 
-    @Override
     public String getUserName() {
         return mPreferencesHelper.getUserName();
     }
 
-    @Override
     public String getUserPic() {
         return mPreferencesHelper.getUserPic();
     }
 
-    @Override
     public Observable<List<Book>> getAllBooks() {
         return mDbHelper.getAllBooks();
     }

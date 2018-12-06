@@ -17,12 +17,8 @@
 package com.mindorks.framework.mvvm.ui.login;
 
 import android.content.Context;
-import android.text.TextUtils;
 
-import com.mindorks.framework.mvvm.data.model.api.BookListRequest;
-import com.mindorks.framework.mvvm.ui.base.BaseActivity;
 import com.mindorks.framework.mvvm.ui.base.BaseViewModel;
-import com.mindorks.framework.mvvm.utils.CommonUtils;
 
 /**
  * Created by amitshekhar on 08/07/17.
@@ -40,17 +36,11 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
 
     public void login(String email, String password) {
         setIsLoading(true);
-        getCompositeDisposable().add(getDataManager()
-                .getBookListCall(new BookListRequest())
-                .doOnSuccess(response -> getDataManager()
-                        .getUserId())
+
+        getDataManager().getBookList()
                 .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(response -> {
+                .subscribe((bookResponse -> {
                     setIsLoading(false);
-                }, throwable -> {
-                    setIsLoading(false);
-                    getNavigator().handleError(throwable);
                 }));
     }
 
