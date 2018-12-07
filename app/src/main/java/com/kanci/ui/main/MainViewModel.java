@@ -14,33 +14,22 @@
  *  limitations under the License
  */
 
-package com.kanci.ui.guide.role;
+package com.kanci.ui.main;
 
 import android.app.Application;
-import android.content.Context;
 
+import com.kanci.data.model.db.Book;
 import com.kanci.ui.base.BaseViewModel;
 
 /**
  * Created by amitshekhar on 08/07/17.
  */
 
-public class RoleViewModel extends BaseViewModel<RoleNavigator> {
+public class MainViewModel extends BaseViewModel<MainNavigator> {
+    private Book book;
 
-    public RoleViewModel(Application context) {
+    public MainViewModel(Application context) {
         super(context);
     }
 
-
-    public void onFbLoginClick() {
-        setIsLoading(true);
-    }
-
-    public void onGoogleLoginClick() {
-        setIsLoading(true);
-    }
-
-    public void onServerLoginClick() {
-        getNavigator();
-    }
 }

@@ -16,6 +16,7 @@
 
 package com.kanci.ui.login;
 
+import android.app.Application;
 import android.content.Context;
 
 import com.kanci.ui.base.BaseViewModel;
@@ -26,7 +27,7 @@ import com.kanci.ui.base.BaseViewModel;
 
 public class LoginViewModel extends BaseViewModel<LoginNavigator> {
 
-    public LoginViewModel(Context context) {
+    public LoginViewModel(Application context) {
         super(context);
     }
 

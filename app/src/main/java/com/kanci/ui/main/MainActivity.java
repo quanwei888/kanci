@@ -14,29 +14,29 @@
  *  limitations under the License
  */
 
-package com.kanci.ui.guide.role;
+package com.kanci.ui.main;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.kanci.ui.base.BaseActivity;
 import com.mindorks.framework.mvvm.BR;
 import com.mindorks.framework.mvvm.R;
 import com.mindorks.framework.mvvm.databinding.ActivityGuideRoleBinding;
-import com.kanci.ui.base.BaseActivity;
 
 /**
  * Created by amitshekhar on 08/07/17.
  */
 
-public class RoleActivity extends BaseActivity<ActivityGuideRoleBinding, RoleViewModel> implements RoleNavigator {
+public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> implements MainNavigator {
 
-    RoleViewModel mViewModel;
+    MainViewModel mViewModel;
     private ActivityGuideRoleBinding mBinding;
 
     public static Intent newIntent(Context context) {
-        return new Intent(context, RoleActivity.class);
+        return new Intent(context, MainActivity.class);
     }
 
     @Override
@@ -46,11 +46,11 @@ public class RoleActivity extends BaseActivity<ActivityGuideRoleBinding, RoleVie
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_guide_role;
+        return R.layout.activity_main;
     }
 
     @Override
-    public RoleViewModel getViewModel() {
+    public MainViewModel getViewModel() {
         return mViewModel;
     }
 
@@ -61,7 +61,7 @@ public class RoleActivity extends BaseActivity<ActivityGuideRoleBinding, RoleVie
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mViewModel = new RoleViewModel(getApplication());
+        mViewModel = new MainViewModel(getApplication());
         super.onCreate(savedInstanceState);
         mBinding = getViewDataBinding();
         mViewModel.setNavigator(this);

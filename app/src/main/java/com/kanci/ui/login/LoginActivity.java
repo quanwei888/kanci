@@ -73,7 +73,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        viewModel = new LoginViewModel(this);
+        viewModel = new LoginViewModel(getApplication());
         super.onCreate(savedInstanceState);
         binding = getViewDataBinding();
         viewModel.setNavigator(this);

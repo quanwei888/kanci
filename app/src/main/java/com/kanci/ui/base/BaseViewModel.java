@@ -16,23 +16,24 @@
 
 package com.kanci.ui.base;
 
-import android.arch.lifecycle.ViewModel;
+import android.app.Application;
+import android.arch.lifecycle.AndroidViewModel;
 import android.arch.persistence.room.Room;
-import android.content.Context;
 import android.databinding.ObservableBoolean;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.kanci.data.AppDataManager;
 import com.kanci.data.DataManager;
+import com.kanci.data.local.db.AppDatabase;
 import com.kanci.data.local.db.AppDbHelper;
+import com.kanci.data.local.db.DbHelper;
 import com.kanci.data.local.prefs.AppPreferencesHelper;
 import com.kanci.data.remote.AppApiHelper;
 import com.kanci.utils.AppConstants;
+import com.kanci.utils.NetworkUtils;
 import com.kanci.utils.rx.AppSchedulerProvider;
 import com.kanci.utils.rx.SchedulerProvider;
-import com.kanci.data.AppDataManager;
-import com.kanci.data.local.db.AppDatabase;
-import com.kanci.data.local.db.DbHelper;
 
 import java.lang.ref.WeakReference;
 
@@ -45,7 +46,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by amitshekhar on 07/07/17.
  */
 
-public abstract class BaseViewModel<N> extends ViewModel {
+public abstract class BaseViewModel<N> extends AndroidViewModel {
 
     private static DataManager dataManager;
 
@@ -57,7 +58,8 @@ public abstract class BaseViewModel<N> extends ViewModel {
 
     private WeakReference<N> navigator;
 
-    public BaseViewModel(Context context) {
+    public BaseViewModel(Application context) {
+        super(context);
         if (dataManager == null && schedulerProvider == null) {
             AppDatabase db = Room.databaseBuilder(context, AppDatabase.class, AppConstants.DB_NAME).fallbackToDestructiveMigration().build();
             DbHelper dbHelper = new AppDbHelper(db);
