@@ -30,7 +30,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".ui.login.LoginActivity"
+            android:name="com.kanci.ui.login.LoginActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>
