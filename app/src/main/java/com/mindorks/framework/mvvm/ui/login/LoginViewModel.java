@@ -24,6 +24,7 @@ import com.mindorks.framework.mvvm.ui.base.BaseViewModel;
 
 import org.reactivestreams.Subscriber;
 
+import io.reactivex.Single;
 import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
@@ -43,30 +44,19 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
     }
 
     public void login(String email, String password) {
-        setIsLoading(true);
-
         getDataManager().getBookList()
                 .subscribeOn(getSchedulerProvider().io())
+                .doOnSubscribe(o -> setIsLoading(true))
+                .doFinally(() -> setIsLoading(false))
                 .observeOn(getSchedulerProvider().ui())
-                .subscribe(new SingleObserver<BookResponse>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onSuccess(BookResponse bookResponse) {
-                        System.out.println("OK");
-                        setIsLoading(false);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        getNavigator().handleError(e);
-                        System.out.println("ERROR");
-                        setIsLoading(false);
-                    }
-                });
+                .subscribe(
+                        bookResponse -> {
+                            System.out.println(bookResponse);
+                        },
+                        e -> {
+                            getNavigator().handleError(e);
+                            e.printStackTrace();
+                        });
     }
 
     public void onFbLoginClick() {

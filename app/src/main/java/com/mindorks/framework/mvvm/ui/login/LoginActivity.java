@@ -56,7 +56,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
     @Override
     public void handleError(Throwable throwable) {
-        showLoading();
+        //showLoading();
         Toast.makeText(this, throwable.getMessage(),Toast.LENGTH_SHORT).show();
     }
 

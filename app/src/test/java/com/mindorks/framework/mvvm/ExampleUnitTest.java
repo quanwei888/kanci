@@ -16,15 +16,22 @@
 
 package com.mindorks.framework.mvvm;
 
+import com.mindorks.framework.mvvm.data.model.api.BookResponse;
+import com.mindorks.framework.mvvm.data.remote.AppApiHelper;
+
 import org.junit.Test;
 
-import javax.inject.Inject;
+import java.util.List;
 
-import dagger.Component;
-import dagger.Module;
-import dagger.Provides;
-
-import static org.junit.Assert.assertEquals;
+import io.reactivex.Observable;
+import io.reactivex.SingleObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.GET;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -32,66 +39,55 @@ import static org.junit.Assert.assertEquals;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 public class ExampleUnitTest {
-
-    public static class Car {
-
-        @Inject Engine engine;
-
-        public Car() {
-            DaggerExampleUnitTest_CarComponent.builder().build().inject(this);
-        }
-
-        public Engine getEngine() {
-            return this.engine;
-        }
+    public static class User {
+        public int id;
+        public String userName;
+        public List<Integer> tag;
+        public List<Book> book;
     }
 
-    public static class Engine {
-        int version = 0;
-        BB b;
-
-        @Inject
-        Engine(BB b) {
-            this.b = b;
-        }
-
-        public void run() {
-            System.out.println("引擎转起来了~~~" + version);
-        }
+    public static class Book {
+        public String bookName;
     }
 
-    @Module
-    public static class BeanModule {
-        @Provides
-        public Engine providerBean(BB b) {
-            Engine engine = new Engine(b);
-            return engine;
-        }
-        @Provides
-        public BB providerBB() {
-            B b = new B();
-            return b;
-        }
-    }
+    public static interface UserService {
 
-    interface BB {
-
-    }
-    public static class B implements BB {
-        @Inject
-        public B() {
-            System.out.println("引擎转起来了~");
-        }
-    }
-
-    @Component(modules = BeanModule.class)
-    public static interface CarComponent {
-        void inject(Car car);
+        @GET("/bookList.php")
+        public Observable<User> getUser();
     }
 
     @Test
-    public void addition_isCorrect() throws Exception {
-        new Car().engine.run();
-        assertEquals(4, 2 + 2);
+    public void f() throws InterruptedException {
+        AppApiHelper appService = new Retrofit.Builder()
+                .baseUrl("http://127.0.0.1:8000")
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build().create(AppApiHelper.class);
+        appService.getBookList()
+                .doOnSubscribe(o -> {
+                    System.out.println(Thread.currentThread().getId() + "doOnSubscribe");
+                })
+                .observeOn(Schedulers.computation())
+                .subscribe(new SingleObserver<BookResponse>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        System.out.println("BEGIN");
+                        System.out.println(Thread.currentThread().getId());
+                    }
+
+                    @Override
+                    public void onSuccess(BookResponse bookResponse) {
+                        System.out.println("OK");
+                        System.out.println(Thread.currentThread().getId());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+                });
+
+        System.out.println(1111);
+        Thread.sleep(5000);
     }
 }

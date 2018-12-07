@@ -6,6 +6,6 @@ import io.reactivex.Single;
 import retrofit2.http.GET;
 
 public interface AppApiHelper {
-    @GET("/bookList.json")
+    @GET("/bookList.php")
     Single<BookResponse> getBookList();
 }

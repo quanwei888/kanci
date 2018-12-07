@@ -64,7 +64,7 @@ public abstract class BaseViewModel<N> extends ViewModel {
             AppPreferencesHelper preferenceHelper = new AppPreferencesHelper(context, AppConstants.PREF_NAME);
             Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
             AppApiHelper appService = new Retrofit.Builder()
-                    .baseUrl("http://127.0.0.1:8000")
+                    .baseUrl("http://10.0.2.2:8000")
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .build().create(AppApiHelper.class);
