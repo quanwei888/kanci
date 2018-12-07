@@ -77,11 +77,13 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        performDependencyInjection();
         super.onCreate(savedInstanceState);
         performDataBinding();
     }
 
+    public void onFragmentDetached(String tag) {
+
+    }
     public T getViewDataBinding() {
         return binding;
     }
@@ -115,10 +117,6 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
     public void openActivityOnTokenExpire() {
         startActivity(LoginActivity.newIntent(this));
         finish();
-    }
-
-    public void performDependencyInjection() {
-        //AndroidInjection.inject(this);
     }
 
     @TargetApi(Build.VERSION_CODES.M)

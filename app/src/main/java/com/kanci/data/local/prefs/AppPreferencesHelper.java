@@ -19,8 +19,6 @@ package com.kanci.data.local.prefs;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.kanci.di.PreferenceInfo;
-
 
 /**
  * Created by amitshekhar on 07/07/17.
@@ -34,7 +32,7 @@ public class AppPreferencesHelper implements PreferencesHelper {
 
     private final SharedPreferences mPrefs;
 
-    public AppPreferencesHelper(Context context, @PreferenceInfo String prefFileName) {
+    public AppPreferencesHelper(Context context, String prefFileName) {
         mPrefs = context.getSharedPreferences(prefFileName, Context.MODE_PRIVATE);
     }
 
