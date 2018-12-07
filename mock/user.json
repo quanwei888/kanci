@@ -1,0 +1,8 @@
+{
+    "id":1,
+    "userName":"admin",
+    "tag":[1,2,3],
+    "book":[
+		{"bookName":"a"}
+	]
+}

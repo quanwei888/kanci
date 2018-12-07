@@ -1,0 +1,17 @@
+{
+    "status":0,
+    "data":[
+        {
+            "bookId":1,
+            "bookName":"大学英语四级",
+            "bookPic":"https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superlanding/img/logo_top.png",
+            "bookWordCount":3234
+        },
+        {
+            "bookId":2,
+            "bookName":"大学英语六级",
+            "bookPic":"https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superlanding/img/logo_top.png",
+            "bookWordCount":3000
+        }
+    ]
+}
