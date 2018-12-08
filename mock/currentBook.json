@@ -1,0 +1,9 @@
+{
+  "bid":int,//单词书ID
+  "name":string,//单词书名
+  "pic":"string,//封面图
+  "wordCount":int,//单词量
+  "doneWordCount":int,//已砍单词量
+  "doingWordCount":int,//学习中单词量
+  "undoWordCount":int,//未学习单词量
+}
